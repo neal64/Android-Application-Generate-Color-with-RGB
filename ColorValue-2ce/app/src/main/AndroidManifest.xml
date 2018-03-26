@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.google.developer.colorvalue">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".AddCardActivity"
+            android:label="@string/add_card_name"
+            android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme.Preference"
+            android:parentActivityName=".MainActivity" />
+
+        <activity android:name=".CardActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.ACTION_DELETE" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:mimeType="text/plain"/>
+        </intent-filter>
+        </activity>
+
+        <provider
+            android:name=".data.CardProvider"
+            android:authorities="com.google.developer.colorvalue"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service
+            android:name=".service.CardService"
+            android:exported="false">
+        <intent-filter>
+            <action android:name="android.intent.action.ACTION_DELETE" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:mimeType="text/plain"/>
+        </intent-filter>
+        </service>
+
+        <service
+            android:name=".service.NotificationJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <receiver android:name=".service.CardAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/card_widget" />
+        </receiver>
+
+
+
+    </application>
+
+</manifest>
